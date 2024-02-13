@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">quizdroid</string>
+    <string name="btn_finish">Finish</string>
+    <string name="btn_next">Next</string>
+    <string name="correct_answer">Correct answer: %1$s</string>
+    <string name="score_count">You have %1$d out of %2$d correct</string>
+    <string name="total_questions_text">Total questions: %1$d</string>
+    <string name="your_answer">Your answer: %1$s</string>
+    <style name="Base.Theme.Quizdroid" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.Quizdroid" parent="Base.Theme.Quizdroid"/>
+</resources>
