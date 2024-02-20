@@ -3,7 +3,7 @@ package edu.uw.ischool.bkp2002.quizdroid
 import android.content.Context
 import android.util.Log
 import org.json.JSONArray
-import java.io.File
+import java.io.IOException
 
 class CurrentTopicRepository(private val context: Context) : TopicRepository {
 
@@ -16,17 +16,19 @@ class CurrentTopicRepository(private val context: Context) : TopicRepository {
     override fun addTopic(topic: Topic) {
         topics.add(topic)
     }
+
     override suspend fun fetchTopics() {
-        val sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val url = sharedPreferences.getString("URL", "defaultURL")
-        val downloadFrequency = sharedPreferences.getInt("DownloadFrequency", 60)
+        try {
+            // Read the questions.json file from the assets folder
+            val inputStream = context.assets.open("questions.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            val jsonString = String(buffer, Charsets.UTF_8)
 
-        val file = File(context.filesDir, "questions.json")
-
-        if (file.exists()) {
-            val jsonString = file.readText(Charsets.UTF_8)
+            // Parse the JSON string to fetch topics
             val jsonArray = JSONArray(jsonString)
-
             val newTopics = mutableListOf<Topic>()
             for (i in 0 until jsonArray.length()) {
                 val jsonTopic = jsonArray.getJSONObject(i)
@@ -55,13 +57,13 @@ class CurrentTopicRepository(private val context: Context) : TopicRepository {
                 newTopics.add(Topic(title, shortDescription, longDescription, quizzes))
             }
 
+            // Update the topics list with the fetched topics
             topics.clear()
             topics.addAll(newTopics)
-        } else {
-            Log.e(
-                "CurrentTopicRepository",
-                "Files directory path: ${context.filesDir}"
-            )
+        } catch (e: IOException) {
+            Log.e("CurrentTopicRepository", "Error reading questions.json from assets", e)
+        } catch (e: Exception) {
+            Log.e("CurrentTopicRepository", "Error parsing JSON", e)
         }
     }
 }
