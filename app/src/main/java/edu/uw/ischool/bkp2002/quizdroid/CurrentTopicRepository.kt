@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import org.json.JSONArray
 import java.io.IOException
+import org.json.JSONException
 
 class CurrentTopicRepository(private val context: Context) : TopicRepository {
 
