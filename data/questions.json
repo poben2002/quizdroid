@@ -1,0 +1,80 @@
+[
+    {
+        "title": "Chemistry",
+        "desc": "Trivia questions about the fundamental concepts of Chemistry",
+        "questions": [
+            {
+                "text": "What is the formula of Hydrochloric Acid?",
+                "answer": "1",
+                "answers": [
+                    "HCI",
+                    "H2SO4",
+                    "HNO3",
+                    "H3PO4"
+                ]
+            },
+            {
+                "text": "How much salt is in the average adult body?",
+                "answer": "2",
+                "answers": [
+                    "1kg",
+                    "250g",
+                    "500g",
+                    "Almost none"
+                ]
+            }
+        ]
+    },
+    {
+        "title": "NBA Trivia",
+        "desc": "Trivia questions about the National Basketball Association",
+        "questions": [
+            {
+                "text": "Which player holds the record for most all time all star appearances?",
+                "answer": "3",
+                "answers": [
+                    "Kevin Durant",
+                    "Kobe Bryant",
+                    "LeBron James",
+                    "Michael Jordan"
+                ]
+            },
+            {
+                "text": "Which team beat the 1996 Chicago Bulls record 72 win season?",
+                "answer": "4",
+                "answers": [
+                    "2018 Cleveland Cavaliers",
+                    "2002 Detroit Pistons",
+                    "2010 LA Clippers",
+                    "2016 Golden State Warriors"
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Classical Music",
+        "desc": "Trivia questions about classical music and composers",
+        "questions": [
+            {
+                "text": "What four-letter classical music term is Italian for high?",
+                "answer": "1",
+                "answers": [
+                    "Alto",
+                    "Soprano",
+                    "Bass",
+                    "Baritone"
+                ]
+            },
+            {
+                "text": "What name is Beethoven's Symphony No.9 also known by?",
+                "answer": "2",
+                "answers": [
+                    "March",
+                    "Choral",
+                    "Grand Theme",
+                    "Basso"
+                ]
+            }
+        ]
+    }
+  ]
