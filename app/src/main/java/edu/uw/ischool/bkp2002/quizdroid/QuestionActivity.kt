@@ -59,43 +59,45 @@ class QuestionActivity : AppCompatActivity() {
             btnSubmit.visibility = View.VISIBLE
         }
 
-        btnSubmit.setOnClickListener {
-            var selectedOptionInd = -1
-            val radioButtons = listOf(R.id.radioButton1, R.id.radioButton2, R.id.radioButton3, R.id.radioButton4)
-
-            for ((index, radioButtonId) in radioButtons.withIndex()) {
-                if (radioGroup.checkedRadioButtonId == radioButtonId) {
-                    selectedOptionInd = index
-                    break
+            btnSubmit.setOnClickListener {
+                val selectedOptionIndex = when (radioGroup.checkedRadioButtonId) {
+                    R.id.radioButton1 -> 0
+                    R.id.radioButton2 -> 1
+                    R.id.radioButton3 -> 2
+                    R.id.radioButton4 -> 3
+                    else -> -1
                 }
-            }
-            val intent = Intent(this, AnswerActivity::class.java).apply {
-                putExtra("selectedTopic", selectedTopic)
-                putExtra("questionInd", questionInd)
-                putExtra("selectedOption", selectedOptionInd)
-                putExtra("count", if (quiz?.correctAnswer == selectedOptionInd) count + 1 else count)
-            }
-            startActivity(intent)
-            finish()
-        }
 
-        edge()
-    }
-
-    private fun edge() {
-        onBackPressedDispatcher.addCallback(this) {
-            if (questionInd > 0) {
-                val previousQuestionInd = questionInd - 1
-                val intent = Intent(this@QuestionActivity, QuestionActivity::class.java).apply {
+                val intent = Intent(this, AnswerActivity::class.java).apply {
                     putExtra("selectedTopic", selectedTopic)
-                    putExtra("questionInd", previousQuestionInd)
-                    putExtra("correctCount", count)
+                    putExtra("questionInd", questionInd)
+                    putExtra("selectedOption", selectedOptionIndex)
+                    putExtra(
+                        "count",
+                        if (quiz?.correctAnswer?.minus(1) == selectedOptionIndex) count + 1 else count
+                    )
                 }
                 startActivity(intent)
                 finish()
-            } else {
-                finish()
+            }
+
+            edge()
+        }
+
+        private fun edge() {
+            onBackPressedDispatcher.addCallback(this) {
+                if (questionInd > 0) {
+                    val previousQuestionInd = questionInd - 1
+                    val intent = Intent(this@QuestionActivity, QuestionActivity::class.java).apply {
+                        putExtra("selectedTopic", selectedTopic)
+                        putExtra("questionInd", previousQuestionInd)
+                        putExtra("count", count)
+                    }
+                    startActivity(intent)
+                    finish()
+                } else {
+                    finish()
+                }
             }
         }
-    }
 }

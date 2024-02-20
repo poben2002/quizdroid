@@ -28,7 +28,7 @@ class TopicOverviewActivity : AppCompatActivity() {
 
         // Set the text views and button based on the selected topic
         tvTopicName.text = nextSelectedTopic?.title
-        tvTopicDescription.text = nextSelectedTopic?.longDescription
+        tvTopicDescription.text = nextSelectedTopic?.shortDescription
         tvTotalQuestions.text = getString(R.string.total_questions_text, nextSelectedTopic?.quizzes?.size ?: 0)
 
         btnBegin.setOnClickListener {

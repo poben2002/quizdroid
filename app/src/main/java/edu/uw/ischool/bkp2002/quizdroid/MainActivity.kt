@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.content.Intent
-
-// Imports needed later? Maybe in other file... temp for now
-//import android.view.View
-//import android.widget.Button
-//import android.widget.TextView
-//import android.widget.RadioButton
-//import android.widget.RadioGroup
-//import androidx.activity.addCallback
+import android.view.Menu
+import android.view.MenuItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,14 +19,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val topicsListView: ListView = findViewById(R.id.topicListView)
-        val topicsList = QuizApp.repository.getAllTopics().map { it.title }
+        lifecycleScope.launch {
+            QuizApp.repository.fetchTopics()
 
-        topicsListView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, topicsList)
+            val topicsList = QuizApp.repository.getAllTopics().map { it.title }
+            withContext(Dispatchers.Main) {
+                topicsListView.adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, topicsList)
+            }
+        }
+
         topicsListView.setOnItemClickListener { _, _, position, _ ->
-            val selectedTopic = topicsList[position]
+            val selectedTopic = (topicsListView.adapter.getItem(position) as String)
             val intent = Intent(this, TopicOverviewActivity::class.java)
             intent.putExtra("selectedTopic", selectedTopic)
             startActivity(intent)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_preferences -> {
+                startActivity(Intent(this, PreferencesActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
